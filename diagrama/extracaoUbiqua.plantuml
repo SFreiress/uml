@@ -1,0 +1,75 @@
+
+@startuml extracaoUbiqua
+
+class Atendente {
+    + agendarColeta(paciente: Paciente): void
+    + comunicarCliente(resultado: Resultado, cliente: Paciente): void
+}
+
+class Paciente {
+    - nome: String
+    - telefone: String
+    - endereco: String
+    - dataNascimento: Date
+    - convenio: String
+    + responderAnamnese(): void
+}
+
+class Agendamento {
+    + paciente: Paciente
+    - dataColeta: String
+}
+
+class Enfermeira {
+    + realizarTriagem(paciente: Paciente): void
+    + coletarAmostra(paciente: Paciente): void
+}
+
+class TecnicoAnalisesClinicas {
+    + analisarAmostras(amostras: Amostra[]): Resultado[]
+}
+
+
+class Coleta {
+    - dadosColetados: String[]
+    + coletarDados(paciente: Paciente): void
+}
+
+class Triagem {
+    - anamnese: String[]
+    + realizarTriagem(paciente: Paciente): void
+}
+
+class Amostra {
+    - identificacao: String
+}
+
+class Exame {
+    - tipo: String
+}
+
+class Resultado {
+    - resultados: String[]
+}
+
+Paciente --> Agendamento
+Resultado --> Atendente
+
+Enfermeira --|> Coleta
+Enfermeira --|> Triagem
+Enfermeira --|> Amostra
+Paciente --|> Enfermeira
+
+TecnicoAnalisesClinicas --|> Resultado
+
+Coleta --> Paciente
+
+Triagem --> Paciente
+
+Amostra --> TecnicoAnalisesClinicas
+
+Amostra --> Exame
+
+Resultado --> Exame
+
+@enduml
