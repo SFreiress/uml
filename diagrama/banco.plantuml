@@ -1,0 +1,70 @@
+@startuml
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title Banco Digital
+
+class ContaCorrente {
+    saldo: Decimal
+    extrato: List<Transacao>
+}
+
+class Agendamento {
+    valor: Decimal
+    data: DateTime
+    descricao: String
+    contaOrigem: ContaCorrente
+    contaDestino: ContaCorrente | Cartao
+}
+
+class Pagamento {
+    valor: Decimal
+    data: DateTime
+    descricao: String
+    contaOrigem: ContaCorrente
+    contaDestino: ContaCorrente | Cartao
+}
+
+class Emprestimo {
+    valorTotal: Decimal
+    valorParcela: Decimal
+    numeroParcelas: Integer
+    taxaJuros: Decimal
+    dataVencimentoParcela: DateTime
+    contaDestino: ContaCorrente
+}
+
+class Investimento {
+    saldo: Decimal
+    extrato: List<Transacao>
+    tipoInvestimento: String
+    rentabilidade: Decimal
+}
+
+class Objetivos {
+    nome: String
+    meta: Decimal
+    dataObjeitvo: DateTime
+}
+
+class Backoffice {
+    gerenciarContasCorrentes: Operacao
+    gerenciarPagamentos: Operacao
+    gerenciarEmprestimos: Operacao
+    gerenciarInvestimentos: Operacao
+    gerarRelatorios: Operacao
+}
+
+ContaCorrente --|> Pagamento
+ContaCorrente --|> Emprestimo
+ContaCorrente --|> Investimento
+Pagamento --|> Agendamento
+Investimento --|> Objetivos
+
+Backoffice ->> ContaCorrente: gerenciarContasCorrentes
+Backoffice -> ContaCorrente: gerenciarPagamentos
+Backoffice -> ContaCorrente: gerenciarEmprestimos
+Backoffice -> ContaCorrente: gerenciarInvestimentos
+Backoffice -> ContaCorrente: gerarRelatorios
+
+@enduml
