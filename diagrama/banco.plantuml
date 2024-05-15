@@ -4,6 +4,22 @@
 
 title Banco Digital
 
+class Onboarding {
+    email: String
+    nome: String
+    dataNascimento: DateTime
+    telefone: String
+    senha:
+}
+
+class Cliente {
+    email: String
+    nome: String
+    dataNascimento: DateTime
+    telefone: String
+    senha:
+}
+
 class ContaCorrente {
     saldo: Decimal
     extrato: List<Transacao>
@@ -60,11 +76,14 @@ ContaCorrente --|> Emprestimo
 ContaCorrente --|> Investimento
 Pagamento --|> Agendamento
 Investimento --|> Objetivos
+Backoffice --|> Onboarding
+ContaCorrente --|> Cliente
 
-Backoffice ->> ContaCorrente: gerenciarContasCorrentes
+Backoffice -> ContaCorrente: gerenciarContasCorrentes
 Backoffice -> ContaCorrente: gerenciarPagamentos
-Backoffice -> ContaCorrente: gerenciarEmprestimos
+Backoffice -> Emprestimo: gerenciarEmprestimos
 Backoffice -> ContaCorrente: gerenciarInvestimentos
 Backoffice -> ContaCorrente: gerarRelatorios
+Cliente -> Emprestimo: solicitacao
 
 @enduml
